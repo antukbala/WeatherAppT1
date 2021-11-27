@@ -2,8 +2,12 @@ package com.antukbala.weatherapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getWeatherUpdate(View view) {
-        String apiKey = "0f93a4a49fa83e9b7c05219faf55a786";
+        InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+
         String cityName = editText.getText().toString().trim();
         String url = "https://api.openweathermap.org/data/2.5/weather?q="+cityName+"&appid=0f93a4a49fa83e9b7c05219faf55a786";
 
@@ -43,9 +49,21 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     JSONObject object = response.getJSONObject("main");
+                    JSONObject object2 = response.getJSONObject("sys");
+
+                    String city = response.getString("name");
+                    String country = object2.getString("country");
                     String temp = object.getString("temp");
-                    Double centigrade = Double.parseDouble(temp)-273.15;
-                    textView.setText(centigrade.toString().substring(0,4));
+                    String humidity = object.getString("humidity");
+
+                    Double convert = Double.parseDouble(temp)-273.15;
+                    String centigrade = convert.toString().substring(0,4);
+
+                    String output = city+", "+country+"\n\nCurrent Temperature:\n"+centigrade+" degree centigrade.\n\n"+
+                            "Humidity:\n"+humidity+" %\n";
+
+                    textView.setText(output);
+                    textView.setTextColor(Color.RED);
                 } catch (JSONException e) {
                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -53,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                textView.setText("");
                 Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
             }
         });

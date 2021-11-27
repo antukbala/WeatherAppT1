@@ -20,9 +20,9 @@
         android:fontFamily="casual" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter City name: "
+        android:hint="Enter City name"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:id="@+id/editTextCity" />
@@ -32,14 +32,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="Get Weather Update"
-        android:textSize="10dp"
+        android:textSize="15dp"
         android:onClick="getWeatherUpdate" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textViewWeather"
-        android:textSize="20dp"
+        android:textSize="25dp"
         android:gravity="center_horizontal"
         android:textColor="@color/teal_200"
         android:layout_marginTop="30dp" />
