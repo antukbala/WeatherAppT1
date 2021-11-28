@@ -6,7 +6,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,7 +24,6 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
     EditText editText;
     TextView textView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
